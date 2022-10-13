@@ -108,6 +108,8 @@ int main(){
         else if (MarV == 'm'){ // skaiciuojama mediana
             for(int i = 0; i < nrStud; i++){
                 int c = stud.counter[i];
+                sort(stud.nd[i], stud.nd[i]+c);
+                
                 if(c % 2 == 0){
                     stud.galut[i] = 0.4 * (stud.nd[i][c/2-1]+stud.nd[i][c/2])/2 + 0.6 * stud.egz[i];
                     cout << (stud.nd[i][c/2-1]+stud.nd[i][c/2])/2 << endl;
