@@ -1,5 +1,3 @@
-v0.1
-1) Nuskaitomi vartotojų įvedami duomenys: studento vardas, pavardė, namų darbu balai, egzamino balas.
-2) Suskaičiuojamas galutinis balas. Galima rezultatą suskaičiuoti imant namų darbu medianą arba vidurkį.
-3) Galima vesti duomenis, kai namų darbų skaičius yra nežinomas iš anksto.
-4) Taip pat galima pasirinkti, kad programa suvestų studento duomenis atsitiktinai.
+v0.2
+1) Sudaroma galimybė skaityti iš failo duomenis bei įrašyti į kitą txt failą.
+2) Išnaudojama try/catch funkcija, parodo tam tikrose vietose kur klaida, jei vartotojas suvedė neteisingus duomenis.
