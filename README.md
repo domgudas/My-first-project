@@ -1,5 +1,6 @@
-v0.1
-1) Nuskaitomi vartotojų įvedami duomenys: studento vardas, pavardė, namų darbu balai, egzamino balas.
-2) Suskaičiuojamas galutinis balas. Galima rezultatą suskaičiuoti imant namų darbu medianą arba vidurkį.
-3) Galima vesti duomenis, kai namų darbų skaičius yra nežinomas iš anksto.
-4) Taip pat galima pasirinkti, kad programa suvestų studento duomenis atsitiktinai.
+v0.3
+
+1) Sugeneruojamas failas pagal vartotojo įvedamus duomenis, t.y. vartotojas gali įvesti kokį nori skaičių studentų analizuoti.
+2) Sugeneruotas failas yra nuskaitomas 
+3) Išskirstome studentus į vargšiukus ir galvočius, išvedame iškart juos į duomenų failus.
+4) Atliekame prieš tai buvusių trijų punktų programos spartos analizę.
