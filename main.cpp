@@ -86,14 +86,14 @@ int main(){
     cout << "Failo isrusiavimas vektoriais ir ivedimas i naujus du failus uztruko: " << laikas << " sekundziu." << endl;
     cout << "Visi veiksmai sudejus uztruko: " << sum << " sekundziu." << endl;
 
-    chrono::steady_clock::time_point b1 = std::chrono::steady_clock::now();
-
     // ------------------------------------------------------------------------------------------------------------------------------
 
     sum = 0;
     laikas = 0;
 
-    ifstream in("StudentaiRandom.txt"); // failo nuskaitymas LIST
+    chrono::steady_clock::time_point g1 = std::chrono::steady_clock::now();
+
+    ifstream in1("StudentaiRandom.txt"); // failo nuskaitymas LIST
 
     for(int i = 0; i < stSk; i++){
         in >> Vardas >> pVardas >> galutinis;
@@ -105,41 +105,60 @@ int main(){
 
     in.close();
 
-    std::chrono::steady_clock::time_point e1 = std::chrono::steady_clock::now();
+    std::chrono::steady_clock::time_point h1 = std::chrono::steady_clock::now();
 
-    double laikas = (chrono::duration_cast<std::chrono::nanoseconds>(e1 - b1).count())/1000000000.0;
+    double laikas1 = (chrono::duration_cast<std::chrono::nanoseconds>(h1 - g1).count())/1000000000.0;
 
-    double sum = sum + laikas;
+    double sum1 = sum1 + laikas1;
 
     cout << "Failo nuskaitymas list uztruko: " << laikas << " sekundziu." << endl;
 
-    chrono::steady_clock::time_point b2 = std::chrono::steady_clock::now();
+    chrono::steady_clock::time_point j2 = std::chrono::steady_clock::now();
 
-    ofstream out1("GalvociaiL.txt"); // studentu isskirstymas LIST
-    ofstream out2("VargsiukaiL.txt");
+    ofstream out3("GalvociaiL.txt"); // studentu isskirstymas LIST
+    ofstream out4("VargsiukaiL.txt");
 
-    for(float i = 0; i < stSk; i++){
-        if(Lgalut[i] < 5){
-            out2 << LVar[i] << " " << LpVar[i] << " " << Lgalut[i] << endl;
+    string A[1000000];
+    string B[1000000];
+    float C[1000000];
+
+    int i = 0;
+
+    for(string x : LVar){
+        A[i] = x;
+        i++;
+    }
+
+    for(string x : LpVar){
+        B[i] = x;
+        i++;
+    }
+
+    for(float x : Lgalut){
+        C[i] = x;
+        i++;
+    }
+
+    for(int i = 0; i < stSk; i++){
+        if(C[i] < 5){
+            out4 << A[i] << " " << B[i] << " " << C[i] << endl;
         }
-            else if (galut[i] >= 5){
-                out1 << LVar[i] << " " << LpVar[i] << " " << Lgalut[i] << endl;
+            else if (C[i] >= 5){
+                out3 << A[i] << " " << B[i] << " " << C[i] << endl;
             }
     }
 
     out1.close();
     out2.close();
 
-    chrono::steady_clock::time_point e2 = std::chrono::steady_clock::now();
+    chrono::steady_clock::time_point k2 = std::chrono::steady_clock::now();
 
-    laikas = (chrono::duration_cast<std::chrono::nanoseconds>(e2 - b2).count())/1000000000.0;
+    laikas = (chrono::duration_cast<std::chrono::nanoseconds>(k2 - j2).count())/1000000000.0;
 
-    sum = sum + laikas;
+    sum1 = sum1 + laikas1;
 
     cout << "Failo isrusiavimas list ir ivedimas i naujus du failus uztruko: " << laikas << " sekundziu." << endl;
     cout << "Visi veiksmai sudejus uztruko: " << sum << " sekundziu." << endl;
-
-    chrono::steady_clock::time_point b1 = std::chrono::steady_clock::now();
 
     return 0;
 }
