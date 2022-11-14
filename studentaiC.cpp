@@ -1,19 +1,11 @@
-#include <iostream>
-#include <string>
-#include <iomanip>
-#include <cmath>
-#include <cstdlib>
-#include <bits/stdc++.h>
-
-using namespace std;
+#include "mylib.h"
 
 struct Studentai{
-    string Var[100];
-    string pVar[100];
-    float nd[100][10];
-    float egz[100];
-    float galut[100];
-    double counter[100];
+    string Var;
+    string pVar;
+    float nd[100];
+    float egz;
+    float galut;
 };
 
 int main(){
@@ -22,10 +14,11 @@ int main(){
     char arND;
     char MarV;
     char atsit;
-    Studentai stud;
+    int size[10000];
 
     cout << "Iveskite studentu skaiciu" << endl;
     cin  >> nrStud;
+    Studentai stud [nrStud];
     cout << "Jei namu darbu kieki zinote is anksto, irasykite z, o jei nezinote, irasykite n" << endl;
     cin  >> arND;
     cout << "Jei noresite viska pateikta mediana, irasykite m, o jei vidurkiu, irasykite v" << endl;
@@ -40,28 +33,28 @@ int main(){
         if(atsit == 'n'){ // neatsitiktinai 
             for(int i = 0; i < nrStud; i++){
                 cout << "Iveskite " << i+1 << " studento varda" << endl;
-                cin  >> stud.Var[i];
+                cin  >> stud[i].Var;
                 cout << "Iveskite " << i+1 << " studento pavarde" << endl;
-                cin  >> stud.pVar[i];
+                cin  >> stud[i].pVar;
                 cout << "Iveskite " << i+1 << " studento egzamino bala" << endl;
-                cin  >> stud.egz[i];
+                cin  >> stud[i].egz;
     
                 for(int j = 0; j < nrNd; j++){
                     cout << "Iveskite " << i+1 << " studento " << j+1 << "namu darbu bala" << endl;
-                    cin  >> stud.nd[i][j];
+                    cin  >> stud[i].nd[j];
                 }
             }
         }
             else if (atsit == 't'){ // atsitiktinai generuojami skaiciai
                 for(int i = 0; i < nrStud; i++){
                     cout << "Iveskite " << i+1 << " studento varda" << endl;
-                    cin  >> stud.Var[i];
+                    cin  >> stud[i].Var;
                     cout << "Iveskite " << i+1 << " studento pavarde" << endl;
-                    cin  >> stud.pVar[i];
+                    cin  >> stud[i].pVar;
                     
-                    stud.egz[i] = rand() % 10 + 1;
+                    stud[i].egz = rand() % 10 + 1;
                     for(int j = 0; j < nrNd; j++){
-                        stud.nd[i][j] = rand() % 10 + 1;
+                        stud[i].nd[j] = rand() % 10 + 1;
                     }
                 }
             }
@@ -69,22 +62,21 @@ int main(){
         else if(arND == 'n'){ // namu darbu kiekis vedant pasakomas
             for(int i = 0; i < nrStud; i++){
                 cout << "Iveskite " << i+1 << " studento varda" << endl;
-                cin  >> stud.Var[i];
+                cin  >> stud[i].Var;
                 cout << "Iveskite " << i+1 << " studento pavarde" << endl;
-                cin  >> stud.pVar[i];
+                cin  >> stud[i].pVar;
                 cout << "Iveskite " << i+1 << " studento egzamino bala" << endl;
-                cin  >> stud.egz[i];
+                cin  >> stud[i].egz;
 
-                stud.counter[i] = 0;
                 for(int j = 0; j < 10000; j++){
                     cout << "Iveskite " << i+1 << "-o studento, " << j+1 << "-o namu darbu bala. Kai noresite baigti, irasykite -1" << endl;
-                    cin  >> stud.nd[i][j];
+                    cin  >> stud[i].nd[j];
 
-                    if(stud.nd[i][j] == -1){
+                    if(stud[i].nd[j] == -1){
                         break;
                     }
                         else {
-                            stud.counter[i] = stud.counter[i] + 1;
+                            continue;
                         }
                 }
             }
@@ -93,30 +85,31 @@ int main(){
     if(MarV == 'v'){ // skaiciuojamas vidurkis
         for(int i = 0; i < nrStud; i++){
             float sumND = 0;
+            size[i] = sizeof(stud[i].nd)/sizeof(stud[i].nd[0]);
 
-            for(int j = 0; j < nrNd || j < stud.counter[i]; j++){
-                sumND = sumND + stud.nd[i][j];
+            for(int j = 0; j < nrNd || j < size[i]; j++){
+                sumND = sumND + stud[i].nd[j];
             }
             if(arND == 'z'){
-                stud.galut[i] = 0.4 * sumND/nrNd + 0.6 * stud.egz[i];
+                stud[i].galut = 0.4 * sumND/nrNd + 0.6 * stud[i].egz;
             }
                 else if(arND == 'n'){
-                    stud.galut[i] = 0.4 * sumND/stud.counter[i] + 0.6 * stud.egz[i];
+                    stud[i].galut = 0.4 * sumND/size[i] + 0.6 * stud[i].egz;
                 }
         }
     } 
         else if (MarV == 'm'){ // skaiciuojama mediana
             for(int i = 0; i < nrStud; i++){
-                int c = stud.counter[i];
-                if(c % 2 == 0){
-                    stud.galut[i] = 0.4 * (stud.nd[i][c/2-1]+stud.nd[i][c/2])/2 + 0.6 * stud.egz[i];
-                    cout << (stud.nd[i][c/2-1]+stud.nd[i][c/2])/2 << endl;
+                
+                if(size[i] % 2 == 0){
+                    stud[i].galut = 0.4 * (stud[i].nd[size[i]/2-1]+stud[i].nd[size[i]/2])/2 + 0.6 * stud[i].egz;
+                    cout << (stud[i].nd[size[i]/2-1]+stud[i].nd[size[i]/2])/2 << endl;
                 }
                     else {
-                        double dydis2 = stud.counter[i]/2;
+                        double dydis2 = size[i]/2;
                         int dydis3 = round(dydis2-1);
-                        cout << stud.counter[i] << endl;
-                        stud.galut[i] = 0.4 * stud.nd[i][dydis3] + 0.6 * stud.egz[i];
+                        cout << size[i] << endl;
+                        stud[i].galut = 0.4 * stud[i].nd[dydis3] + 0.6 * stud[i].egz;
                     }
             }
         }
@@ -125,7 +118,7 @@ int main(){
     cout << "----------------------------------------------------------------" << endl;
 
     for(int i = 0; i < nrStud; i++){ // isvedamas rezultatas
-        cout << stud.Var[i] << "                     " << stud.pVar[i] << "                     " << setprecision(3) << stud.galut[i] << endl;
+        cout << stud[i].Var << "                     " << stud[i].pVar << "                     " << setprecision(3) << stud[i].galut << endl;
     }
     return 0;
 }
