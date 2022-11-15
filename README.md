@@ -1,7 +1,7 @@
 v0.4
 
 Yra sukurta 2 atskiros cpp programos, analizuojančios duomenų nuskaitymą iš failų bei studentų rūšiavimą pagal dvi kategorijas: Vargšiukus ir Galvočius.
-Analizės rezultatuose matome List pranašumą šioje užduotyje:
+Analizės rezultatuose matome:
 
 List:
 
