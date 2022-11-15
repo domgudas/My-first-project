@@ -1,18 +1,18 @@
 #include "mylib.h"
-#include "strukturos.h"
 
 int main(){
+    
+    list <string> Var, pVar;
+    list <string>::iterator it1;
+    list <string>::iterator it2;
+    list <float> galut;
+    list <float>::iterator it3;
 
-    vector <Studentai> stud;
-
-    int stSk;
+    int stSk, Galutinis;
+    string Vardas, Pavarde;
     
     cout << "Iveskite studentu skaiciu" << endl;
     cin  >> stSk;
-
-    stud.resize(stSk);
-
-    chrono::steady_clock::time_point b0 = std::chrono::steady_clock::now();
 
     ofstream out("StudentaiRandom.txt"); // failo sukurimas
 
@@ -22,43 +22,45 @@ int main(){
 
     out.close();
 
-    std::chrono::steady_clock::time_point e0 = std::chrono::steady_clock::now();
-
-    double laikas = (chrono::duration_cast<std::chrono::nanoseconds>(e0 - b0).count())/1000000000.0;
-    double sum = laikas;
-
-    cout << "Failo sukurimas uztruko: " << laikas << " sekundziu." << endl;
-
     chrono::steady_clock::time_point b1 = std::chrono::steady_clock::now();
 
     ifstream in("StudentaiRandom.txt"); // failo nuskaitymas
 
     for(int i = 0; i < stSk; i++){
-        in >> stud.at(i).Var >> stud.at(i).pVar >> stud.at(i).galut;
+        in >> Vardas >> Pavarde >> Galutinis;
+
+        Var.push_back(Vardas);
+        pVar.push_back(Pavarde);
+        galut.push_back(Galutinis);
     }
 
     in.close();
 
     std::chrono::steady_clock::time_point e1 = std::chrono::steady_clock::now();
 
-    laikas = (chrono::duration_cast<std::chrono::nanoseconds>(e1 - b1).count())/1000000000.0;
+    double laikas = (chrono::duration_cast<std::chrono::nanoseconds>(e1 - b1).count())/1000000000.0;
 
-    sum = sum + laikas;
+    double sum = sum + laikas;
 
     cout << "Failo nuskaitymas uztruko: " << laikas << " sekundziu." << endl;
+
+    it1 = Var.begin();
+    it2 = pVar.begin();
 
     chrono::steady_clock::time_point b2 = std::chrono::steady_clock::now();
 
     ofstream out1("Galvociai.txt"); // studentu isskirstymas
     ofstream out2("Vargsiukai.txt");
 
-    for(int i = 0; i < stSk; i++){
-        if(stud.at(i).galut < 5){
-            out2 << stud.at(i).Var << " " << stud.at(i).pVar << " " << stud.at(i).galut << endl;
+    for(it3 = galut.begin(); it3 != galut.end(); ++it3){
+        if(*it3 < 5){
+            out2 << *it1 << " " << *it2 << " " << *it3 << endl;
         }
-            else if (stud.at(i).galut >= 5){
-                out1 << stud.at(i).Var << " " << stud.at(i).pVar << " " << stud.at(i).galut << endl;
+            else if (*it3 >= 5){
+                out1 << *it1 << " " << *it2 << " " << *it3 << endl;
             }
+        ++it1;
+        ++it2;
     }
 
     out1.close();
