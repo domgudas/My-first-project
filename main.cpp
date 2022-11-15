@@ -1,29 +1,16 @@
-#include <iostream>
-#include <string>
-#include <iomanip>
-#include <cmath>
-#include <cstdlib>
-#include <stdlib.h>
-#include <bits/stdc++.h>
-#include <chrono>
-#include <unistd.h>
-
-using namespace std;
-
-struct Studentai{
-    string Var[10000];
-    string pVar[10000];
-    float galut[10000];
-};
+#include "mylib.h"
+#include "strukturos.h"
 
 int main(){
 
-    Studentai stud;
+    vector <Studentai> stud;
 
     int stSk;
     
     cout << "Iveskite studentu skaiciu" << endl;
     cin  >> stSk;
+
+    stud.resize(stSk);
 
     chrono::steady_clock::time_point b0 = std::chrono::steady_clock::now();
 
@@ -47,7 +34,7 @@ int main(){
     ifstream in("StudentaiRandom.txt"); // failo nuskaitymas
 
     for(int i = 0; i < stSk; i++){
-        in >> stud.Var[i] >> stud.pVar[i] >> stud.galut[i];
+        in >> stud.at(i).Var >> stud.at(i).pVar >> stud.at(i).galut;
     }
 
     in.close();
@@ -66,11 +53,11 @@ int main(){
     ofstream out2("Vargsiukai.txt");
 
     for(int i = 0; i < stSk; i++){
-        if(stud.galut[i] < 5){
-            out2 << stud.Var[i] << " " << stud.pVar[i] << " " << stud.galut[i] << endl;
+        if(stud.at(i).galut < 5){
+            out2 << stud.at(i).Var << " " << stud.at(i).pVar << " " << stud.at(i).galut << endl;
         }
-            else if (stud.galut[i] >= 5){
-                out1 << stud.Var[i] << " " << stud.pVar[i] << " " << stud.galut[i] << endl;
+            else if (stud.at(i).galut >= 5){
+                out1 << stud.at(i).Var << " " << stud.at(i).pVar << " " << stud.at(i).galut << endl;
             }
     }
 
