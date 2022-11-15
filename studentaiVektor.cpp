@@ -12,8 +12,6 @@ int main(){
 
     stud.resize(stSk);
 
-    chrono::steady_clock::time_point b0 = std::chrono::steady_clock::now();
-
     ofstream out("StudentaiRandom.txt"); // failo sukurimas
 
     for(int i = 0; i < stSk; i++){
@@ -21,13 +19,6 @@ int main(){
     }
 
     out.close();
-
-    std::chrono::steady_clock::time_point e0 = std::chrono::steady_clock::now();
-
-    double laikas = (chrono::duration_cast<std::chrono::nanoseconds>(e0 - b0).count())/1000000000.0;
-    double sum = laikas;
-
-    cout << "Failo sukurimas uztruko: " << laikas << " sekundziu." << endl;
 
     chrono::steady_clock::time_point b1 = std::chrono::steady_clock::now();
 
@@ -41,9 +32,9 @@ int main(){
 
     std::chrono::steady_clock::time_point e1 = std::chrono::steady_clock::now();
 
-    laikas = (chrono::duration_cast<std::chrono::nanoseconds>(e1 - b1).count())/1000000000.0;
+    double laikas = (chrono::duration_cast<std::chrono::nanoseconds>(e1 - b1).count())/1000000000.0;
 
-    sum = sum + laikas;
+    double sum = sum + laikas;
 
     cout << "Failo nuskaitymas uztruko: " << laikas << " sekundziu." << endl;
 
