@@ -1,143 +1,43 @@
-#include <iostream>
-#include <string>
-#include <iomanip>
-#include <cmath>
-#include <cstdlib>
-#include <stdlib.h>
-#include <bits/stdc++.h>
-
-using namespace std;
-
-struct Studentai{
-    string Var[10000];
-    string pVar[10000];
-    float nd[10000][20];
-    float egz[10000];
-    float galut[10000];
-    double counter[10000];
-};
+#include "mylib.h"
+#include "strukturos.h"
 
 int main(){
-    int nrStud;
-    int nrNd;
-    int studSkaic = 0;
+
+    vector <Studentai> stud;
+
+    int studSkaic;
+    int nrStud = 0;
+    int nrNd = 0;
+    char iras;
     char arND;
     char MarV;
     char atsit;
     char skait;
-    char iras;
-    Studentai stud;
+    vector <int> size;
+    
+    cout << "Jei noresite skaityti is failo, irasykite t, jei noresite patys vesti duomenis, irasykite n" << endl;
+    
+    try{
+        cin  >> skait;
 
-    cout << "Jei noresite skaityti is failo, irasykite s, jei ne, irasykite n" << endl;
-    cin  >> skait;
+        if(skait != 't' && skait != 'n'){
+            throw 0;
 
-    if (skait == 's'){
-        try{
-            ifstream in("studentai10000.txt");
-
-            if(in.eof()){
-                throw 0;
-            }
-        } 
-            catch (int x){
-                cout << "Duomenu failas yra tuscias ! ERROR NR. " << x << endl;
-                
-                return -1;
-            }
-
-        ifstream in("studentai10000.txt");
-
-        studSkaic = 0;
-
-        while(true){
-            if(in.eof()){
-                break;
-            }
-
-            in >> stud.Var[studSkaic];
-            in >> stud.pVar[studSkaic];
-
-            for(int j = 0; j < 15; j++){
-                in >> stud.nd[studSkaic][j];
-            }
-
-            in >> stud.egz[studSkaic];
-            studSkaic = studSkaic + 1;
+            return -1;
+        }
+    }
+        catch(int x){
+            cout << "Ivesta raide neatitinka kriteriju ! ERROR NR. " << x << endl;
         }
 
-        in.close();
-
+    if (skait == 'n'){ // skaitomi duomenys is console 
+        cout << "Iveskite studentu skaiciu" << endl;
+        cin  >> nrStud;
+        stud.resize(nrStud);
+        cout << "Jei namu darbu kieki zinote is anksto, irasykite z, o jei nezinote, irasykite n" << endl;
+        cin  >> arND;
         cout << "Jei noresite viska pateikta mediana, irasykite m, o jei vidurkiu, irasykite v" << endl;
         cin  >> MarV;
-
-        if(MarV == 'v'){ // skaiciuojamas vidurkis
-            for(int i = 0; i < studSkaic; i++){
-                float sumND = 0;
-
-                for(int j = 0; j < 15; j++){
-                    sumND = sumND + stud.nd[i][j];
-                }
-                
-                stud.galut[i] = 0.4 * sumND/15 + 0.6 * stud.egz[i];
-            }
-        } 
-            else if (MarV == 'm'){ // skaiciuojama mediana
-                for(int i = 0; i < studSkaic; i++){
-                    sort(stud.nd[i], stud.nd[i]+15);
-
-                    double dydis2 = 15/2;
-                    int dydis3 = round(dydis2-1);
-                    // cout << stud.counter[i] << endl;
-                    stud.galut[i] = 0.4 * stud.nd[i][dydis3] + 0.6 * stud.egz[i];
-                        
-                }
-            }
-
-        cout << "Jei noresite rezultato console, rasykite c, jei faile, rasykite f" << endl;
-        cin  >> iras;
-    }
-    else if (skait == 'n'){
-        try{
-            cout << "Iveskite studentu skaiciu" << endl;
-            cin  >> nrStud;
-
-            if(nrStud <= 0){
-                throw 1;
-            }
-        }
-            catch (int x){
-                cout << "Ivestas negalimas studentu skaicius! ERROR NR. " << x << endl;
-
-                return -1;
-            }
-
-        try{
-            cout << "Jei namu darbu kieki zinote is anksto, irasykite z, o jei nezinote, irasykite n" << endl;
-            cin  >> arND;
-
-            if(arND != 'z' && arND != 'n'){
-                throw 2;
-            }
-        }
-            catch (int x){
-                cout << "Ivesta negalima raide! ERROR NR. " << x << endl;
-
-                return -1;
-            }
-
-        try{
-            cout << "Jei noresite viska pateikta mediana, irasykite m, o jei vidurkiu, irasykite v" << endl;
-            cin  >> MarV;
-
-            if(MarV != 'm' && MarV != 'v'){
-                throw 3;
-            }
-        }
-            catch (int x){
-                cout << "Ivesta negalima raide! ERROR NR. " << x << endl;
-
-                return -1;
-            }
 
         if(arND == 'z'){ // namu darbu kiekis is anksto zinomas 
             cout << "Iveskite namu darbu skaiciu" << endl;
@@ -148,28 +48,30 @@ int main(){
             if(atsit == 'n'){ // neatsitiktinai 
                 for(int i = 0; i < nrStud; i++){
                     cout << "Iveskite " << i+1 << " studento varda" << endl;
-                    cin  >> stud.Var[i];
+                    cin  >> stud.at(i).Var;
                     cout << "Iveskite " << i+1 << " studento pavarde" << endl;
-                    cin  >> stud.pVar[i];
+                    cin  >> stud.at(i).pVar;
                     cout << "Iveskite " << i+1 << " studento egzamino bala" << endl;
-                    cin  >> stud.egz[i];
+                    cin  >> stud.at(i).egz;
     
                     for(int j = 0; j < nrNd; j++){
                         cout << "Iveskite " << i+1 << " studento " << j+1 << "namu darbu bala" << endl;
-                        cin  >> stud.nd[i][j];
+                        stud.at(i).nd.resize(j+1);
+                        cin  >> stud.at(i).nd.at(j);
                     }
                 }
             }
                 else if (atsit == 't'){ // atsitiktinai generuojami skaiciai
                     for(int i = 0; i < nrStud; i++){
                         cout << "Iveskite " << i+1 << " studento varda" << endl;
-                        cin  >> stud.Var[i];
+                        cin  >> stud.at(i).Var;
                         cout << "Iveskite " << i+1 << " studento pavarde" << endl;
-                        cin  >> stud.pVar[i];
+                        cin  >> stud.at(i).pVar;
                     
-                        stud.egz[i] = rand() % 10 + 1;
+                        stud.at(i).egz = rand() % 10 + 1;
                         for(int j = 0; j < nrNd; j++){
-                            stud.nd[i][j] = rand() % 10 + 1;
+                            stud.at(i).nd.resize(j+1);
+                            stud.at(i).nd.at(j) = rand() % 10 + 1;
                         }
                     }
                 }
@@ -177,74 +79,169 @@ int main(){
             else if(arND == 'n'){ // namu darbu kiekis vedant pasakomas
                 for(int i = 0; i < nrStud; i++){
                     cout << "Iveskite " << i+1 << " studento varda" << endl;
-                    cin  >> stud.Var[i];
+                    cin  >> stud.at(i).Var;
                     cout << "Iveskite " << i+1 << " studento pavarde" << endl;
-                    cin  >> stud.pVar[i];
+                    cin  >> stud.at(i).pVar;
                     cout << "Iveskite " << i+1 << " studento egzamino bala" << endl;
-                    cin  >> stud.egz[i];
+                    cin  >> stud.at(i).egz;
 
-                    stud.counter[i] = 0;
                     for(int j = 0; j < 10000; j++){
                         cout << "Iveskite " << i+1 << "-o studento, " << j+1 << "-o namu darbu bala. Kai noresite baigti, irasykite -1" << endl;
-                        cin  >> stud.nd[i][j];
-
-                        if(stud.nd[i][j] == -1){
+                        stud.at(i).nd.resize(j+1);
+                        cin  >> stud.at(i).nd.at(j);
+                    
+                        if(stud.at(i).nd.at(j) == -1){
                             break;
                         }
                             else {
-                                stud.counter[i] = stud.counter[i] + 1;
+                                continue;
                             }
                     }
                 }
             }
-    
 
-    if(MarV == 'v'){ // skaiciuojamas vidurkis
+        if(MarV == 'v'){ // skaiciuojamas vidurkis
         for(int i = 0; i < nrStud; i++){
             float sumND = 0;
-
-            for(int j = 0; j < nrNd || j < stud.counter[i]; j++){
-                sumND = sumND + stud.nd[i][j];
+            
+            size.resize(stud.at(i).nd.size());
+            size.at(i) = stud.at(i).nd.size() - 1;
+            
+            for(int j = 0; j < nrNd || j < size.at(i); j++){
+                sumND = sumND + stud.at(i).nd.at(j);
             }
             if(arND == 'z'){
-                stud.galut[i] = 0.4 * sumND/nrNd + 0.6 * stud.egz[i];
+                stud.at(i).galut = 0.4 * sumND/nrNd + 0.6 * stud.at(i).egz;
             }
                 else if(arND == 'n'){
-                    stud.galut[i] = 0.4 * sumND/stud.counter[i] + 0.6 * stud.egz[i];
+                    stud.at(i).galut = 0.4 * sumND/size.at(i) + 0.6 * stud.at(i).egz;
                 }
         }
     } 
         else if (MarV == 'm'){ // skaiciuojama mediana
             for(int i = 0; i < nrStud; i++){
-                int c = stud.counter[i];
-                if(c % 2 == 0){
-                    stud.galut[i] = 0.4 * (stud.nd[i][c/2-1]+stud.nd[i][c/2])/2 + 0.6 * stud.egz[i];
+                size.resize(stud.at(i).nd.size());
+                size.at(i) = stud.at(i).nd.size() - 1;
+                
+                if(size.at(i) % 2 == 0){
+                    stud.at(i).galut = 0.4 * (stud.at(i).nd.at(size.at(i)/2-1)+stud.at(i).nd.at(size.at(i)/2))/2 + 0.6 * stud.at(i).egz;
                 }
                     else {
-                        double dydis2 = stud.counter[i]/2;
+                        double dydis2 = size.at(i)/2.0;
+                        cout << dydis2 << " = dydis2" << endl;
                         int dydis3 = round(dydis2-1);
-                        stud.galut[i] = 0.4 * stud.nd[i][dydis3] + 0.6 * stud.egz[i];
+                        cout << dydis3 << " = dydis3" << endl;
+                        stud.at(i).galut = 0.4 * stud.at(i).nd.at(dydis3) + 0.6 * stud.at(i).egz;
                     }
             }
         }
     }
+        else if (skait == 't'){ // skaitomi duomenys is failo
+            try{
+                ifstream in("studentai10000.txt");
 
-    if(iras == 'c'){
-        cout << "Pavarde" << setw(20) << " Vardas " << setw(23) << "Galutinis" << endl;
-        cout << "-------------------------------------------------------" << endl;
+                if(in.eof()){
+                    throw 1;
+                }
+            } 
+                catch (int x){
+                    cout << "Duomenu failas yra tuscias ! ERROR NR. " << x << endl;
+                    
+                    return -1;
+                }
 
-        for(int i = 0; i < nrStud; i++){ // isvedamas rezultatas
-          cout << stud.Var[i] << setw(20) << stud.pVar[i] << setprecision(3) << setw(20) << stud.galut[i] << endl;
+            ifstream in ("studentai10000.txt");
+
+            studSkaic = 0;
+
+            while(true){
+                if(in.eof()){
+                    break;
+                }
+
+                studSkaic = studSkaic + 1;
+
+                stud.resize(studSkaic);
+
+                in >> stud.at(studSkaic - 1).Var;
+                in >> stud.at(studSkaic - 1).pVar;
+
+                for(int j = 0; j < 15; j++){
+                    stud.at(studSkaic - 1).nd.resize(j+1);
+                    in >> stud.at(studSkaic - 1).nd.at(j);
+                }
+
+                in >> stud.at(studSkaic - 1).egz;
+            }
+
+            in.close();
+
+            cout << "Jei noresite viska pateikta mediana, irasykite m, o jei vidurkiu, irasykite v" << endl;
+
+            try{
+                cin  >> MarV;
+                
+                if(MarV != 'm' && MarV != 'v'){
+                    throw 2;
+                }
+            }
+                catch(int x) {
+                    cout << "Ivesta raide neatitinka kriteriju ! ERROR NR. " << x << endl;
+                }
+
+            if(MarV == 'v'){ // skaiciuojamas vidurkis
+                for(int i = 0; i < stud.size(); i++){
+                    float sumND = 0;
+                    
+                    size.resize(stud.size());
+                    size.at(i) = stud.at(i).nd.size();
+                   
+                    for(int j = 0; j < nrNd || j < size.at(i); j++){
+                        sumND = sumND + stud.at(i).nd.at(j);
+                    }
+                    
+                    stud.at(i).galut = 0.4 * sumND/size.at(i) + 0.6 * stud.at(i).egz;
+                    
+                }
+            } 
+            else if (MarV == 'm'){ // skaiciuojama mediana
+                for(int i = 0; i < stud.size(); i++){
+                    size.resize(stud.size());
+                    size.at(i) = stud.at(i).nd.size() - 1;
+                    
+                    if(size.at(i) % 2 == 0){
+                        stud.at(i).galut = 0.4 * (stud.at(i).nd.at(size.at(i)/2-1)+stud.at(i).nd.at(size.at(i)/2))/2 + 0.6 * stud.at(i).egz;
+                    }
+                        else {
+                            double dydis2 = size.at(i)/2.0;
+                            cout << dydis2 << " = dydis2" << endl;
+                            int dydis3 = round(dydis2-1);
+                            cout << dydis3 << " = dydis3" << endl;
+                            stud.at(i).galut = 0.4 * stud.at(i).nd.at(dydis3) + 0.6 * stud.at(i).egz;
+                        }
+                }
+            }
+            
+            cout << "Jei noresite rodyti duomenis faile, rasykite f, o jei console, rasykite c" << endl;
+            cin  >> iras;
+
+        }
+    if(iras == 'c'){ // isvedamas rezultatas
+        cout << "Pavarde                     Vardas                     Galutinis" << endl;
+        cout << "----------------------------------------------------------------" << endl;
+
+        for(int i = 0; i < nrStud || i < stud.size(); i++){ 
+            cout << stud.at(i).Var << "                     " << stud.at(i).pVar << "                     " << setprecision(3) << stud.at(i).galut << endl;
         }
     }
         else if(iras == 'f'){
             ofstream out("rezultatai.txt");
 
-            out << "Pavarde" << setw(20) << " Vardas " << setw(23) << "Galutinis" << endl;
-            out << "-------------------------------------------------------" << endl;
+            out << "Pavarde                     Vardas                     Galutinis" << endl;
+            out << "----------------------------------------------------------------" << endl;
 
-            for(int i = 0; i < studSkaic; i++){ // isvedamas rezultatas
-                out << stud.Var[i] << setw(20) << stud.pVar[i] << setprecision(3) << setw(20) << stud.galut[i] << endl;
+            for(int i = 0; i < stud.size(); i++){ 
+                out << stud.at(i).Var << "                     " << stud.at(i).pVar << "                     " << setprecision(3) << stud.at(i).galut << endl;
             }
 
             out.close();
