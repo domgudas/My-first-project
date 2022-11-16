@@ -1,2 +1,1 @@
-# My-first-project
-Project PVZ
+# Pirmasis projektas
