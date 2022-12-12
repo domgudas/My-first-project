@@ -17,7 +17,13 @@ int main(){
     ofstream out("StudentaiRandom.txt"); // failo sukurimas
 
     for(int i = 0; i < stSk; i++){
-        out << "Vardenis" << i+1 << " Pavardenis" << i+1 << " " << rand() % 10 + 1 << endl;
+        out << "Vardenis" << i+1 << " Pavardenis" << i+1;
+
+        for(int j = 0; j < 16; j++){
+            out << " " << rand() % 10 + 1;
+        }
+
+        out << endl;
     }
 
     out.close();
@@ -34,10 +40,27 @@ int main(){
     ifstream in("StudentaiRandom.txt"); // failo nuskaitymas
 
     for(int i = 0; i < stSk; i++){
-        in >> stud.at(i).Var >> stud.at(i).pVar >> stud.at(i).galut;
+        in >> stud.at(i).Var >> stud.at(i).pVar;
+
+        for(int j = 0; j < 15; j++){
+            stud.at(i).nd.resize(j+1);
+            in >> stud.at(i).nd.at(j);
+        }
+
+        in >> stud.at(i).egz;
     }
 
     in.close();
+
+    for(int i = 0; i < stud.size(); i++){ // galutinio balo ieskojimas 
+        float sumND = 0;
+                   
+        for(int j = 0; j < 15; j++){
+            sumND = sumND + stud.at(i).nd.at(j);
+            }
+                    
+        stud.at(i).galut = 0.4 * sumND/15 + 0.6 * stud.at(i).egz;
+    }
 
     std::chrono::steady_clock::time_point e1 = std::chrono::steady_clock::now();
 
@@ -54,10 +77,10 @@ int main(){
 
     for(int i = 0; i < stSk; i++){
         if(stud.at(i).galut < 5){
-            out2 << stud.at(i).Var << " " << stud.at(i).pVar << " " << stud.at(i).galut << endl;
+            out2 << stud.at(i).Var << " " << stud.at(i).pVar << " " << setprecision(2) << stud.at(i).galut << endl;
         }
             else if (stud.at(i).galut >= 5){
-                out1 << stud.at(i).Var << " " << stud.at(i).pVar << " " << stud.at(i).galut << endl;
+                out1 << stud.at(i).Var << " " << stud.at(i).pVar << " " << setprecision(2) << stud.at(i).galut << endl;
             }
     }
 
